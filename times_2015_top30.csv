@@ -1,0 +1,32 @@
+world_rank,university_name,country,teaching,international,research,citations,income,total_score
+1,California Institute of Technology,United States of America,92.2,67,98.1,99.7,89.1,94.3
+2,Harvard University,United States of America,92.9,67.6,98.6,98.9,44,93.3
+3,University of Oxford,United Kingdom,88.6,90.7,97.7,95.5,72.9,93.2
+4,Stanford University,United States of America,91.5,69,96.7,99.1,63.1,92.9
+5,University of Cambridge,United Kingdom,89.7,87.8,95.6,95.2,51.1,92
+6,Massachusetts Institute of Technology,United States of America,89.1,84.3,88.2,100,95.7,91.9
+7,Princeton University,United States of America,86.6,61.2,94.7,99.6,82.7,90.9
+8,"University of California, Berkeley",United States of America,84.2,58.5,96.7,99.1,44.8,89.5
+9,Imperial College London,United Kingdom,84.6,92.7,88.3,89.4,72.7,87.5
+9,Yale University,United States of America,88.5,59.8,90.8,94,42,87.5
+11,University of Chicago,United States of America,83.9,65.2,89.9,97.3,36.8,87.1
+12,"University of California, Los Angeles",United States of America,82.4,49.2,90.5,95.3,55.52,85.5
+13,ETH Zurich Õ¢_ŠÎ_ÑÒ Swiss Federal Institute of Technology Zurich,Switzerland,78.2,96.6,90.2,83.5,73.2,84.6
+14,Columbia University,United States of America,83.9,68.3,79.4,95.3,55.52,84.4
+15,Johns Hopkins University,United States of America,75.6,59.7,84.2,93.6,100,83
+16,University of Pennsylvania,United States of America,79,43.8,82,94.4,43,81
+17,University of Michigan,United States of America,77,49.8,86.5,88.9,55.7,80.9
+18,Duke University,United States of America,73.5,50.5,75.2,96.6,100,79.9
+19,Cornell University,United States of America,71.6,59,83.8,91.5,33.7,79.4
+20,University of Toronto,Canada,74.4,71.2,85.1,83,46.1,79.3
+21,Northwestern University,United States of America,72.7,36.7,78.9,96.9,77,79.2
+22,University College London,United Kingdom,70.4,90.6,80.4,85.1,46.2,78.7
+23,University of Tokyo,Japan,81.4,32.4,85.1,74.7,51.2,76.1
+24,Carnegie Mellon University,United States of America,61.6,59.3,74.9,92,53,74.3
+25,National University of Singapore,Singapore,72,94.9,78.1,66,53.4,73.3
+26,University of Washington,United States of America,64.5,47.9,68.9,95,44.7,73.2
+27,Georgia Institute of Technology,United States of America,62.5,68.9,71.2,85.8,72.3,72.8
+28,University of Texas at Austin,United States of America,64.3,33.1,72,91.5,58.1,72.3
+29,LMU Munich,Germany,65.1,56.4,69.1,83,100,71.9
+29,University of Illinois at Urbana-Champaign,United States of America,67.7,43.9,79,77.8,51.7,71.9
+29,University of Wisconsin-Madison,United States of America,67.7,33.6,71.3,87.7,53.3,71.9

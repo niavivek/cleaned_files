@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<link rel="stylesheet" href="https://rawgit.com/tpreusse/radar-chart-d3/master/src/radar-chart.css"> -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.css">
+
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+<link rel="stylesheet" type="text/css" href="css/d3.parcoords.css">
+
+<style>
+body {
+  padding: 20px;
+}
+svg {
+  font: 10px sans-serif;
+  padding-top: 20px;
+}
+.tooltip {
+  font: 14px sans-serif;
+  background-color: #D3D3D3;
+  color: #001400;
+          margin: 10px;
+          height: 20px;
+          padding-right: 5px;
+          padding-left: 5px;
+          padding-top: 5px;
+    border-radius:10px;
+}
+#title{
+  font: 24pt sans-serif;
+  padding: 10px;
+}
+#author{
+  font: 14pt sans-serif;
+  padding: 10px;
+}
+#instructions{
+  font: 12pt sans-serif;
+  padding-left: 200px;
+}
+#note{
+  font: 8pt sans-serif;
+  padding-left: 200px;
+}
+#note_1{
+  font: 12pt sans-serif;
+  padding-left: 200px;
+}
+#about{
+  font: 10pt sans-serif;
+  padding:20px;
+}
+.statechange1 {
+  fill:#1F77B4;
+  stroke:#1F77B4;
+  stroke-width: 3;
+  stroke-opacity: .7;
+}
+.background path {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+}
+.foreground path {
+  fill: none;
+  stroke: #74d576;
+  stroke-width:1;
+}
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  cursor: move;
+}
+.radar-chart .area {
+  fill-opacity: 0.0;
+}
+.radar-chart.focus .area {
+  fill-opacity: 0.3;
+}
+.radar-chart.focus .area.focused {
+  fill-opacity: 0.9;
+}
+.area.university1, .university1 .circle {
+  fill: #1F77B4;
+  stroke: #1F77B4;
+}
+.area.university2, .university2 .circle {
+  fill: #FF7F0E;
+  stroke: #FF7F0E;
+}
+.area.university3, .university3 .circle {
+  fill: #1F77B4;
+  stroke: #1F77B4;
+}
+.area.university4, .university4 .circle {
+  fill: #FF7F0E;
+  stroke: #FF7F0E;
+}
+path.hovered{
+  stroke: #006400;
+  stroke-width: 4;
+}
+path.university1_line{
+  stroke: #1F77B4;
+  stroke-width: 3;
+  stroke-opacity: .7;
+}
+path.university1_line.hovered{
+  stroke: #1F77B4;
+  stroke-width: 4;
+  stroke-opacity: 1;
+}
+path.university2_line{
+  stroke: #FF7F0E;
+  stroke-width: 3;
+  stroke-opacity: .7;
+}
+path.university2_line.hovered{
+  stroke: #FF7F0E;
+  stroke-width: 4;
+  stroke-opacity: 1;
+}
+path.university3_line{
+  stroke: #1F77B4;
+  stroke-width: 3;
+  stroke-opacity: .7;
+}
+path.university3_line.hovered{
+  stroke: #1F77B4;
+  stroke-width: 4;
+  stroke-opacity: 1;
+}
+path.university4_line{
+  stroke: #FF7F0E;
+  stroke-width: 3;
+  stroke-opacity: .7;
+}
+path.university4_line.hovered{
+  stroke: #FF7F0E;
+  stroke-width: 4;
+  stroke-opacity: 1;
+}
+</style>
+
+<body>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="radar-chart.js"></script> <!-- https://github.com/alangrafu/radar-chart-d3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="bower_components/chosen/chosen.jquery.js"></script>
+
+<!-- Setting up page layout -->
+  <title>World University Rankings</title>
+  <!-- <div id="title"> World University Rankings </div> -->
+  <h3 align="center">Times University Ranking: Radar</h3>
+
+  <div id="instructions">This visualization displays data from the Times Higher Education 2011 + 2016 World University Rankings. </div>
+  <div id="note">Note: Null values for Income, Staff to Student Ratio, and International Score in the data were given the average value of that dimension.</div>
+
+
+  <div id="container" style="width: 1500px; height: 400px; padding-top: 50px;">
+
+    <div id="radar" style="width: 500px; height: 300px; float: left;">
+      <div id="chart" style="width: 500px; height: 300px;">
+        <div id="note_1">Year 2016
+      </span>
+
+        </div>
+    </div>
+  </div>
+    <div id="legend" style="float:right; padding-right: 200px;"></div>
+    </div>
+
+   <div id="radar1" style="width: 500px; height: 300px; ">
+     <div id="chart1" style="width: 500px; height: 300px;">
+       <div id="note_1">Year 2011
+     </span>
+
+       </div>
+    </div>
+  </div>
+
+   <!-- <div id="legend" style="float:right; padding-right: 200px;"></div>
+   </div> -->
+
+
+
+<script>
+// Radar chart configuration
+RadarChart.defaultConfig.radius = 3;
+RadarChart.defaultConfig.w = 800;
+RadarChart.defaultConfig.h = 300;
+RadarChart.defaultConfig.tooltipColor = "white";
+RadarChart.defaultConfig.backgroundTooltipOpacity = "0.7";
+var data = [
+  {
+    className: "Harvard University", // optional can be used for styling
+    axes: [
+      {axis: "Teaching Score", value: 99.7},
+      {axis: "International Score", value: 72.4},
+      {axis: "Research Score", value: 98.7},
+      {axis: "Citation Score", value: 98.8},
+      {axis: "Income Score", value: 34.5}
+    ]
+  },
+  {
+    className: "California Institute of Technology", // optional can be used for styling
+    axes: [
+      {axis: "Teaching Score", value: 99.7},
+      {axis: "International Score", value: 54.6},
+      {axis: "Research Score", value: 98},
+      {axis: "Citation Score", value: 99.9},
+      {axis: "Income Score", value: 83.7}
+      ]
+    }
+];
+var data1 = [
+  {
+    className: "Harvard University", // optional can be used for styling
+    axes: [
+      {axis: "Teaching Score", value: 83.6},
+      {axis: "International Score", value: 77.2},
+      {axis: "Research Score", value: 99},
+      {axis: "Citation Score", value: 99.8},
+      {axis: "Income Score", value: 45.2}
+    ]
+  },
+  {
+    className: "California Institute of Technology", // optional can be used for styling
+    axes: [
+      {axis: "Teaching Score", value: 95.6},
+      {axis: "International Score", value: 64},
+      {axis: "Research Score", value: 97.6},
+      {axis: "Citation Score", value: 99.8},
+      {axis: "Income Score", value: 97.8}
+      ]
+    }
+];
+/*
+// This function is likely useless but not using it breaks a bunch of other things
+function dataset() {
+  return data.map(function(d) {
+    return {
+      className: d.className,
+      axes: d.axes.map(function(axis) {
+        return {axis: axis.axis, value: axis.value};
+      })
+    };
+  });
+}
+*/
+// Move to front for line chart
+// http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+// Dropdown menus for selecting universities
+// Adapted from https://bl.ocks.org/mbostock/5872848
+var dispatch = d3.dispatch("load", "statechange1", "statechange2");
+d3.csv("data_radar_2011.csv", function(error, univs) {
+  if (error) throw error;
+  var univById = d3.map();
+  univs.forEach(function(d) { univById.set(d.Name, d); });
+  dispatch.load(univById);
+  dispatch.statechange1(univById.get("Harvard University"));
+  dispatch.statechange2(univById.get("California Institute of Technology"));
+});
+var dispatch1 = d3.dispatch("load1", "statechange3", "statechange4");
+d3.csv("data_radar_2016.csv", function(error, univs) {
+  if (error) throw error;
+  var univById1 = d3.map();
+  univs.forEach(function(d) { univById1.set(d.Name, d); });
+  dispatch1.load1(univById1);
+  dispatch1.statechange3(univById1.get("Harvard University"));
+  dispatch1.statechange4(univById1.get("California Institute of Technology"));
+});
+dispatch.on("load.menu", function(univById) {
+  // University 1 legend box
+  d3.select("#legend")
+    .append("br")
+    .attr("style", "clear:both");
+  var legend1 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px; width: 40px; margin-top:-25px;")
+      .append("svg")
+        .attr("width", 30)
+        .attr("height", 30)
+        .append("rect")
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("fill", "#1F77B4")
+          .attr("id", "legend1")
+  // University 1 Selector
+  var select1 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px;")
+      .append("select")
+        .attr("id", "select1")
+        .on("change", function() { dispatch.statechange1(univById.get(this.value));});
+  select1.selectAll("option")
+    .data(univById.values())
+    .enter()
+      .append("option")
+        .attr("value", function(d) { return d.Name; })
+        .text(function(d) { return d.Name; });
+  // Line break between selection boxes
+  d3.select("#legend")
+    .append("br")
+      .attr("style", "clear:both");
+  // University 2 selection box
+  var legend2 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px; width: 40px; margin-top:-25px;")
+      .append("svg")
+        .attr("width", 30)
+        .attr("height", 30)
+        .append("rect")
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("fill", "#FF7F0E")
+          .attr("id", "legend2")
+  var select2 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px;")
+      .append("select")
+        .attr("id", "select2")
+        .classed("chzn-select", true)
+        .on("change", function() { dispatch.statechange2(univById.get(this.value)); });
+  select2.selectAll("option")
+    .data(univById.values())
+    .enter()
+    .append("option")
+      .attr("value", function(d) { return d.Name; })
+      .text(function(d) { return d.Name; });
+  // Convert drop downs to chosen components to allow search
+  // http://harvesthq.github.io/chosen/
+  // http://stackoverflow.com/questions/8980131/changing-selection-in-a-select-with-the-chosen-plugin
+  $("#select1").chosen().change(function() {
+    dispatch.statechange1(univById.get(this.value));
+    //dispatch.statechange1(univById1.get(this.value));
+  });
+  $("#select1").val("Harvard University").trigger('chosen:updated');
+  $("#select2").chosen().change(function() {
+    dispatch.statechange2(univById.get(this.value));
+    //dispatch.statechange2(univById1.get(this.value));
+  });
+  $("#select2").val("California Institute of Technology").trigger('chosen:updated');
+  // Change of state on university 1
+  dispatch.on("statechange1.menu", function(univ) {
+    select1.property("value", univ.Name);
+    // Update the dataset with correct info for selected university
+    data[0] = {
+      className: univ.rank + ". " + univ.Name,
+      axes: [
+        {axis: "Teaching Score", value: univ.teaching},
+        {axis: "International Score", value: univ.international},
+        {axis: "Research Score", value: univ.research},
+        {axis: "Citations Score", value: univ.citations},
+        {axis: "Income Score", value: univ.income}
+      ]
+    };
+    // Update the parallel coordinates to highlight selected university and move to front
+   // d3.select("path.university1_line").classed("university1_line", false);
+    // Remove spaces from university name and convert to underscores to create id
+    // http://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).classed("university1_line", true);
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).moveToFront();
+  });
+  // Change of state on university 2
+  dispatch.on("statechange2.menu", function(univ) {
+    select2.property("value", univ.Name);
+    data[1] = {
+      className: univ.rank + ". " + univ.Name,
+      axes: [
+        {axis: "Teaching Score", value: univ.teaching},
+        {axis: "International Score", value: univ.international},
+        {axis: "Research Score", value: univ.research},
+        {axis: "Citations Score", value: univ.citations},
+        {axis: "Income Score", value: univ.income}
+      ]
+    };
+    //d3.select("path.university2_line").classed("university2_line", false);
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).classed("university2_line", true);
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).moveToFront();
+  });
+});
+dispatch1.on("load1.menu", function(univById1) {
+d3.select("#legend")
+    .append("br")
+    .attr("style", "visibility: hidden")
+    .attr("style", "clear:both");
+  var legend1 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px; width: 40px; margin-top:-25px;")
+      .append("svg")
+        .attr("width", 30)
+        .attr("height", 30)
+        .append("rect")
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("fill", "#1F77B4")
+          .attr("id", "legend1")
+          .attr("style", "visibility: hidden")
+  // University 1 Selector
+  var select1 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px;")
+      .append("select")
+        .attr("id", "select1")
+        .attr("style", "visibility: hidden")
+        .on("change", function() { dispatch1.statechange3(univById1.get(this.value));});
+  select1.selectAll("option")
+    .data(univById1.values())
+    .enter()
+      .append("option")
+      .attr("style", "visibility: hidden")
+        .attr("value", function(d) { return d.Name; })
+        .text(function(d) { return d.Name; });
+  // Line break between selection boxes
+  d3.select("#legend")
+    .append("br")
+    .attr("style", "visibility: hidden")
+      .attr("style", "clear:both");
+  // University 2 selection box
+  var legend2 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px; width: 40px; margin-top:-25px;")
+      .append("svg")
+        .attr("width", 30)
+        .attr("height", 30)
+        .append("rect")
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("fill", "#FF7F0E")
+          .attr("id", "legend2")
+          .attr("style", "visibility: hidden")
+  var select2 = d3.select("#legend")
+    .append("div")
+      .attr("style", "float: left; height: 50px;")
+      .append("select")
+        .attr("id", "select2")
+        .attr("style", "visibility: hidden")
+        .classed("chzn-select", true)
+        .on("change", function() { dispatch1.statechange4(univById1.get(this.value)); });
+  select2.selectAll("option")
+    .data(univById1.values())
+    .enter()
+    .append("option")
+    .attr("style", "visibility: hidden")
+      .attr("value", function(d) { return d.Name; })
+      .text(function(d) { return d.Name; });
+  // Convert drop downs to chosen components to allow search
+  // http://harvesthq.github.io/chosen/
+  // http://stackoverflow.com/questions/8980131/changing-selection-in-a-select-with-the-chosen-plugin
+  $("#select1").chosen().change(function() {
+    //dispatch.statechange1(univById.get(this.value));
+    dispatch1.statechange3(univById1.get(this.value));
+  });
+  $("#select1").val("Harvard University").trigger('chosen:updated');
+  $("#select2").chosen().change(function() {
+    //dispatch.statechange2(univById.get(this.value));
+    dispatch1.statechange4(univById1.get(this.value));
+  });
+  $("#select2").val("California Institute of Technology").trigger('chosen:updated');
+  // Change of state on university 1
+  dispatch1.on("statechange3.menu", function(univ) {
+    select1.property("value", univ.Name);
+    // Update the dataset with correct info for selected university
+    data1[0] = {
+      className: univ.rank + ". " + univ.Name,
+      axes: [
+        {axis: "Teaching Score", value: univ.teaching},
+        {axis: "International Score", value: univ.international},
+        {axis: "Research Score", value: univ.research},
+        {axis: "Citations Score", value: univ.citations},
+        {axis: "Income Score", value: univ.income}
+      ]
+    };
+    // Update the parallel coordinates to highlight selected university and move to front
+   // d3.select("path.university3_line").classed("university3_line", false);
+    // Remove spaces from university name and convert to underscores to create id
+    // http://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
+   // d3.select(("#"+univ.Name).replace(/ /g,"_")).classed("university3_line", true);
+   // d3.select(("#"+univ.Name).replace(/ /g,"_")).moveToFront();
+  });
+  // Change of state on university 2
+  dispatch1.on("statechange4.menu", function(univ) {
+    select2.property("value", univ.Name);
+    data1[1] = {
+      className: univ.rank + ". " + univ.Name,
+      axes: [
+        {axis: "Teaching Score", value: univ.teaching},
+        {axis: "International Score", value: univ.international},
+        {axis: "Research Score", value: univ.research},
+        {axis: "Citations Score", value: univ.citations},
+        {axis: "Income Score", value: univ.income}
+      ]
+    };
+    //d3.select("path.university4_line").classed("university4_line", false);
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).classed("university4_line", true);
+    //d3.select(("#"+univ.Name).replace(/ /g,"_")).moveToFront();
+  });
+});
+// Loading the radar chart
+dispatch.on("load.radar", function(univById) {
+  var chart = RadarChart.chart();
+  var cfg = chart.config(); // retrieve default config
+  // Update the chart with new data when there's a state change
+  dispatch.on("statechange1.radar", function(d) {
+    RadarChart.draw("#chart", data);
+    //RadarChart.draw("#chart1", data);
+  });
+  dispatch.on("statechange2.radar", function(d) {
+    RadarChart.draw("#chart", data);
+    //RadarChart.draw("#chart1", data);
+  });
+});
+// Loading the radar chart
+dispatch1.on("load1.radar1", function(univById1) {
+  var chart = RadarChart.chart();
+  var cfg = chart.config(); // retrieve default config
+  // Update the chart with new data when there's a state change
+  dispatch1.on("statechange3.radar1", function(d) {
+    RadarChart.draw("#chart1", data1);
+    //RadarChart.draw("#chart1", data);
+  });
+  dispatch1.on("statechange4.radar1", function(d) {
+    RadarChart.draw("#chart1", data1);
+    //RadarChart.draw("#chart1", data);
+  });
+});
+</script>
+
+<!-- </body> -->
+
+<a class="button button-primary" href="index.html">Back to Home</a><br><br>
+</body>
+
+</html>
