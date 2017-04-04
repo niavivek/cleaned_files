@@ -198,7 +198,7 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  color: red;
+  color: darkblue;
   border-color: #888;
   outline: 0; }
 .button.button-primary,
@@ -207,8 +207,8 @@ input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
   color: #FFF;
-  background-color: red;
-  border-color: #33C3F0; }
+  background-color: darkblue;
+  border-color: #888; }
 .button.button-primary:hover,
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
@@ -219,9 +219,9 @@ button.button-primary:focus,
 input[type="submit"].button-primary:focus,
 input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
-  color: red;
-  background-color: #1EAEDB;
-  border-color: #1EAEDB; }
+  color: white;
+  background-color: #888;
+  border-color: #888; }
 
 
 /* Forms
