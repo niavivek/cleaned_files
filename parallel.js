@@ -1,5 +1,4 @@
-
-<!-- Ref: http://bl.ocks.org/ABSegler/9791707 -->
+<!-- //bl.ocks.org/ABSegler/9791707 -->
 
 var dset = "times_2016_top30.csv";
 startD3();
