@@ -64,12 +64,12 @@ var svg = d3.select("#pc").append("svg")
   .append("g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
-d3.csv(dset, function(error, piers) {
+d3.csv(dset, function(error, data) {
 
   // Extract the list of dimensions and create a scale for each.
-  x.domain(dimensions = d3.keys(piers[0]).filter(function(d) {
-    return d!= "name" && d != "world_rank" && d!= "country" && d!= "university_name" &&(y[d] = d3.scale.linear()
-        .domain(d3.extent(piers, function(p) { return +p[d]; }))
+  x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
+    return d!= "name" && d != "world_rank" && d!= "country" && d!= "university_name" && (y[d] = d3.scale.linear()
+        .domain(d3.extent(data, function(p) { return +p[d]; }))
         .range([h, 0]));
   }));
 
@@ -77,7 +77,7 @@ d3.csv(dset, function(error, piers) {
   background = svg.append("g")
       .attr("class", "background")
     .selectAll("path")
-      .data(piers)
+      .data(data)
     .enter().append("path")
       .attr("d", path);
 
@@ -85,7 +85,7 @@ d3.csv(dset, function(error, piers) {
   foreground = svg.append("g")
       .attr("class", "foreground")
     .selectAll("path")
-      .data(piers)
+      .data(data)
     .enter().append("path")
       .attr("d", path)
     .on("mouseover", function(d){
